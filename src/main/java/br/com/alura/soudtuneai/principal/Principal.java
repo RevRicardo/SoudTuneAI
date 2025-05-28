@@ -1,9 +1,19 @@
 package br.com.alura.soudtuneai.principal;
 
+import br.com.alura.soudtuneai.model.Artista;
+import br.com.alura.soudtuneai.model.TipoArtistas;
+import br.com.alura.soudtuneai.repository.ArtistasRepository;
+
 import java.util.Scanner;
 
 public class Principal {
+    private final ArtistasRepository repositorio;
+
     private Scanner leitura = new Scanner(System.in);
+
+    public Principal(ArtistasRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 
     public void exibeMenu() {
 
@@ -55,9 +65,26 @@ public class Principal {
     }
 
     private void cadastrarArtista() {
+        var cadastrarNovo = "S";
+
+        while (cadastrarNovo.equalsIgnoreCase("S")) {
+            System.out.println("Nome do artista: ");
+            var nome = leitura.nextLine();
+            System.out.println("Tipo: (solo, dupla ou banda) ");
+            var tipo = leitura.nextLine();
+            TipoArtistas tipoArtistas = TipoArtistas.valueOf(tipo.toUpperCase());
+            Artista artista = new Artista(nome, tipoArtistas);
+            repositorio.save(artista);
+            System.out.println("Cadastrar outro artista? (S/N");
+            cadastrarNovo = leitura.nextLine();
+        }
+
     }
 
     private void cadastrarMusica() {
+        System.out.println("Cadastrar música de qual artista? ");
+        var nome = leitura.nextLine();
+        
     }
 
     private void listarMusica() {
