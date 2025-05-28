@@ -1,9 +1,11 @@
 package br.com.alura.soudtuneai.principal;
 
 import br.com.alura.soudtuneai.model.Artista;
+import br.com.alura.soudtuneai.model.Musica;
 import br.com.alura.soudtuneai.model.TipoArtistas;
 import br.com.alura.soudtuneai.repository.ArtistasRepository;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -84,7 +86,16 @@ public class Principal {
     private void cadastrarMusica() {
         System.out.println("Cadastrar música de qual artista? ");
         var nome = leitura.nextLine();
-        
+        Optional<Artista> artista = repositorio.findByNomeContainingIgnoreCase(nome);
+        if (artista.isPresent()) {
+            System.out.println("Qual o título da música");
+            var nomeMusica = leitura.nextLine();
+            Musica musica = new Musica(nomeMusica);
+            musica.setArtista(artista.get());
+            repositorio.save(artista.get());
+        } else {
+            System.out.println("Artista não encontrado");
+        }
     }
 
     private void listarMusica() {
