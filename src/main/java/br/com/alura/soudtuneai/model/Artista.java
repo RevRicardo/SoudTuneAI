@@ -16,7 +16,7 @@ public class Artista {
     @Enumerated(EnumType.STRING)
     private TipoArtistas tipo;
 
-    @OneToMany(mappedBy = "artista")
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Musica> musicas = new ArrayList<>();
 
     public Artista() {

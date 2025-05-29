@@ -5,6 +5,7 @@ import br.com.alura.soudtuneai.model.Musica;
 import br.com.alura.soudtuneai.model.TipoArtistas;
 import br.com.alura.soudtuneai.repository.ArtistasRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -92,6 +93,7 @@ public class Principal {
             var nomeMusica = leitura.nextLine();
             Musica musica = new Musica(nomeMusica);
             musica.setArtista(artista.get());
+            artista.get().getMusicas().add(musica);
             repositorio.save(artista.get());
         } else {
             System.out.println("Artista não encontrado");
@@ -99,9 +101,15 @@ public class Principal {
     }
 
     private void listarMusica() {
+        List<Artista> artistas = repositorio.findAll();
+        artistas.forEach(a -> a.getMusicas().forEach(System.out::println));
     }
 
     private void buscarMusicaPorArtista() {
+        System.out.println("Buscar musicas de que artistas");
+        var nome = leitura.nextLine();
+        List<Musica> musicas = repositorio.buscaMusicaPorArtista(nome);
+        musicas.forEach(System.out::println);
     }
 
     private void pesquisarDadosDoArtista() {
