@@ -4,6 +4,7 @@ import br.com.alura.soudtuneai.model.Artista;
 import br.com.alura.soudtuneai.model.Musica;
 import br.com.alura.soudtuneai.model.TipoArtistas;
 import br.com.alura.soudtuneai.repository.ArtistasRepository;
+import br.com.alura.soudtuneai.service.ConsultaChetGPT;
 
 import java.util.List;
 import java.util.Optional;
@@ -113,6 +114,10 @@ public class Principal {
     }
 
     private void pesquisarDadosDoArtista() {
+        System.out.println("Pesquisar sobre esse artista: ");
+        var nomeArtista = leitura.nextLine();
+        var resposta = ConsultaChetGPT.obterInformacao(nomeArtista);
+        System.out.println(resposta.trim());
     }
 
 
